@@ -1,7 +1,32 @@
 import wollok.game.*
+import Rodados.*
+import Trafic.*
+import Colores.*
 
 program corsasEnElGame {
-	// hacer las inicializaciones necesarias 
+	game.title("Flota De Rodados")
+	game.height(10)
+	game.width(10)
+    const cachito = new ChevroletCorsa()
+	game.addVisual(cachito)
+	keyboard.right().onPressDo{cachito.moverALaDerecha()}
+	keyboard.left().onPressDo{cachito.moverALaIzquierda()}
+	keyboard.up().onPressDo{cachito.moverArriba()}
+	keyboard.down().onPressDo{cachito.moverAbajo()}
+	keyboard.r().onPressDo{cachito.image("autitorojo.png")}
+	keyboard.a().onPressDo{cachito.image("autitoazul.png")}
+	keyboard.v().onPressDo{cachito.image("autitoverde.png")}
+	
+	
+	
+	
+	
+	
 	
 	game.start()
+	
 }
+
+
+
+   

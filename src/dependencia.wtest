@@ -1,0 +1,106 @@
+import Trafic.*
+import Dependecia.*
+import Rodados.*
+import Pedidos.*
+test "dependencia " {
+	const dependenciaDeportes = new Dependencia()
+	dependenciaDeportes.empleados(45)
+	const cachito = new ChevroletCorsa()
+	cachito.color("Rojo")
+	const corsaAzul = new ChevroletCorsa()
+	corsaAzul.color("Azul")
+	const corsaVerde = new ChevroletCorsa()
+	corsaVerde.color("Verde")
+	const renaultKwid1 = new RenaultKwid()
+	const autoEspecial1 = new AutosEspeciales()
+	autoEspecial1.capacidadDePasajeros(5)
+	autoEspecial1.velocidadMaxima(160)
+	autoEspecial1.peso(1200)
+	autoEspecial1.color("beige")
+	dependenciaDeportes.agregarAFlota(cachito)
+	dependenciaDeportes.agregarAFlota(corsaAzul)
+	dependenciaDeportes.agregarAFlota(corsaVerde)
+	dependenciaDeportes.agregarAFlota(autoEspecial1)
+	dependenciaDeportes.agregarAFlota(renaultKwid1)
+	
+	const dependenciaCultura = new Dependencia()
+	dependenciaCultura.empleados(31)
+	const renaultKwid = new RenaultKwid()
+	const renaultKwid2 = new RenaultKwid()
+	const renaultKwid3 = new RenaultKwid()
+	renaultKwid2.transladarTanque()
+	trafic.interior(interiorPopular)
+	trafic.motor(motorBataton)
+	dependenciaCultura.agregarAFlota(cachito)
+	dependenciaCultura.agregarAFlota(renaultKwid)
+	dependenciaCultura.agregarAFlota(renaultKwid3)
+	dependenciaCultura.agregarAFlota(renaultKwid2)
+	dependenciaCultura.agregarAFlota(trafic)
+	
+	
+	
+	assert.equals(6450,dependenciaDeportes.pesoTotalDeLaFlota())
+	assert.equals(10700,dependenciaCultura.pesoTotalDeLaFlota())
+	assert.that(dependenciaDeportes.estaBienEquipada())
+	assert.notThat(dependenciaCultura.estaBienEquipada())
+	assert.equals(4,dependenciaDeportes.capacidadTotalEnColor("Rojo"))
+	assert.equals(12,dependenciaCultura.capacidadTotalEnColor("Blanco"))
+	assert.equals("beige",dependenciaDeportes.colorDelRodadoMasRapido())
+	assert.equals("Rojo",dependenciaCultura.colorDelRodadoMasRapido())
+	assert.that(dependenciaDeportes.esGrande()) 
+	assert.notThat(dependenciaCultura.esGrande()) 
+	assert.equals(25,dependenciaDeportes.capacidadFaltante())
+	assert.equals(5,dependenciaCultura.capacidadFaltante())
+	
+	//////////////ETAPADA 2 ///////////////
+	const pedido1 = new Pedidos()
+	pedido1.distanciaARecorer(960)
+	pedido1.tiempoMaximo(8)
+	pedido1.capacidadDePasajeros(4)
+	pedido1.coloresImcompatibles(["Azul","Negro"])
+	assert.that(pedido1.puedeSatisfacerUnPedido(cachito))
+
+	const pedido2 = new Pedidos()
+	pedido2.distanciaARecorer(960)
+	pedido2.tiempoMaximo(8)
+	pedido2.capacidadDePasajeros(4)
+	pedido2.coloresImcompatibles(["Azul","Negro","Rojo"])
+	assert.notThat(pedido2.puedeSatisfacerUnPedido(cachito))
+	
+	const pedido3 = new Pedidos()
+	pedido3.distanciaARecorer(960)
+	pedido3.tiempoMaximo(6)
+	pedido3.capacidadDePasajeros(4)
+	pedido3.coloresImcompatibles(["Azul","Negro"])
+	assert.notThat(pedido3.puedeSatisfacerUnPedido(cachito))
+	
+	
+	////////////////////ETAPA 3 ///////////
+	const pedido4 = new Pedidos()
+	pedido4.distanciaARecorer(960)
+	pedido4.tiempoMaximo(8)
+	pedido4.capacidadDePasajeros(4)
+	pedido4.coloresImcompatibles(["Azul","Negro"])
+	assert.notThat(pedido4.puedeSatisfacerUnPedido(corsaAzul))
+
+	const pedido5 = new Pedidos()
+	pedido5.distanciaARecorer(960)
+	pedido5.tiempoMaximo(8)
+	pedido5.capacidadDePasajeros(4)
+	pedido5.coloresImcompatibles(["Negro","Rojo"])
+	assert.notThat(pedido5.puedeSatisfacerUnPedido(corsaAzul))
+	
+	const pedido6 = new Pedidos()
+	pedido6.distanciaARecorer(960)
+	pedido6.tiempoMaximo(8)
+	pedido6.capacidadDePasajeros(4)
+	pedido6.coloresImcompatibles(["Azul","Negro"])
+	assert.notThat(pedido6.puedeSatisfacerUnPedido(corsaAzul))
+	
+	dependenciaDeportes.agregarPedido(pedido4)
+	dependenciaDeportes.agregarPedido(pedido5)
+	dependenciaDeportes.agregarPedido(pedido6)
+	assert.equals(12,dependenciaDeportes.totalDePasajerosEnPedidos())
+	
+	assert.that(dependenciaDeportes.colorImcompatibleParaTodos("Azul"))
+}
